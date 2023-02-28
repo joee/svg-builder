@@ -26,6 +26,7 @@ module Graphics.Svg.Core
 , makeElement
 , makeElementNoEnd
 , makeElementDoctype
+, rawElement
 , with
   -- * Rendering
 , renderBS
@@ -148,6 +149,9 @@ makeElementNoEnd name = Element $ \a -> go a
     go attrs =
          s2b "<" <> BB.fromText name
       <> foldlMapWithKey buildAttr attrs <> s2b "/>"
+
+rawElement :: Text -> Element
+rawElement t = Element (\_ -> BB.fromText t)
 
 -- | Folding and monoidally appending attributes.
 foldlMapWithKey :: Monoid m => (k -> v -> m) -> HashMap k v -> m
